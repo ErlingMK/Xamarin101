@@ -1,5 +1,7 @@
 ﻿using System;
 using LightInject;
+using TestApp.Pages;
+using TestApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,17 +9,16 @@ namespace TestApp
 {
     public partial class App : Application
     {
-        public App()
+        public IServiceContainer ServiceContainer { get; }
+
+        public App(IServiceContainer serviceContainer)
         {
+            ServiceContainer = serviceContainer;
+
             InitializeComponent();
-
-            var serviceContainer = new ServiceContainer();
-            serviceContainer.RegisterFrom<CompositionRoot>();
-
-            MainPage = new MainPage()
-            {
-                BindingContext = serviceContainer.GetInstance<IMainPageViewModel>()
-            };
+            var navigationPage = ServiceContainer.GetInstance<NavigationPage>();
+            ServiceContainer.GetInstance<INavigationService>().Navigation = navigationPage.Navigation;
+            MainPage = navigationPage;
         }
 
         protected override void OnStart()
@@ -30,15 +31,6 @@ namespace TestApp
 
         protected override void OnResume()
         {
-        }
-    }
-
-    public class CompositionRoot : ICompositionRoot
-    {
-        public void Compose(IServiceRegistry serviceRegistry)
-        {
-            serviceRegistry.Register<IMainPageViewModel, MainPageViewModel>();
-            serviceRegistry.Register(factory => DependencyService.Get<ILoginService>());
         }
     }
 }

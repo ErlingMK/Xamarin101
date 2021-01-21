@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:TestApp.Pages;assembly=TestApp"
+             x:Class="TestApp.Pages.MainPage"
+             x:DataType="{x:Type pages:IMainPageViewModel}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Greetings}"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand"
+                   FontSize="18" />
+            <Label Text="Tap a button!"
+                   FontSize="12"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand" />
+
+            <Button Text="Navigate"
+                    Command="{Binding NavigateCommand, Mode=OneTime}"
+                    HorizontalOptions="CenterAndExpand" />
+
+            <Button Text="Do a platform service call"
+                    Command="{Binding AuthenticateCommand, Mode=OneTime}"
+                    HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="{Binding Result}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

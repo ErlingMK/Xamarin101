@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using LightInject;
 
 namespace TestApp.Droid
 {
@@ -21,8 +22,19 @@ namespace TestApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+
+            LoadApplication(new App(CreateContainer()));
         }
+
+        private IServiceContainer CreateContainer()
+        {
+            var serviceContainer = new ServiceContainer();
+            serviceContainer.RegisterFrom<SharedCompositionRoot>();
+            serviceContainer.RegisterFrom<PlatformCompositionRoot>();
+            serviceContainer.Register(factory => serviceContainer, new PerContainerLifetime()); // Register itself
+            return serviceContainer;
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
