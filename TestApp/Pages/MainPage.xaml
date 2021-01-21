@@ -8,12 +8,12 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Greetings}"
-                   VerticalOptions="Start"
+                   VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand"
                    FontSize="18" />
             <Label Text="Tap a button!"
                    FontSize="12"
-                   VerticalOptions="Start"
+                   VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
 
             <Button Text="Navigate"
